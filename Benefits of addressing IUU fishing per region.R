@@ -2,7 +2,7 @@
 # Author: Reniel B. Cabral
 # Date: 31 August 2017
 
-#load the libraries needed for plotting. If these libraries are not yet installed in your computer, you can install them by
+#Load the libraries needed for plotting. If these libraries are not yet installed in your computer, you can install them by
 # using the code: install.packages(c("reshape2","ggrepel","gridExtra","grid"))
 library(reshape2)
 library(ggrepel)
