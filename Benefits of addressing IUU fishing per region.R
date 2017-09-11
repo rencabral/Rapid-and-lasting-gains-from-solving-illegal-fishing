@@ -12,7 +12,7 @@ library(grid)
 #Fig 4a. f is F/Fmsy value of the median fishery per region
 
 #Read data file. Be sure to change the address to your local file address 
-IUUregion <- read.csv("C:/Users/Ren/Documents/GitHub/Rapid and lasting gains from solving illegal fishing/IUUregion.csv")
+IUUregion <- read.csv("C:/Users/Ren/Documents/GitHub/Rapid-and-lasting-gains-from-solving-illegal-fishing/IUUregion.csv")
 
 #Adding a column to the data file (IUUregion) containing the f values per region resulting from addressing IUU fishing in the region
 IUUregion$Change<-IUUregion$f*(100-IUUregion$IUU)/100
@@ -34,7 +34,7 @@ IUUreform<-IUUFAO+theme(axis.text.x=element_text(size=14,face="bold",color="blac
 
 #Fig 4b. f is F/Fmsy value of the catch-weighted average fishery per region
 #Read data file. Be sure to change the address to your local file address 
-IUUregionWT <- read.csv("C:/Users/Ren/Documents/GitHub/Rapid and lasting gains from solving illegal fishing/IUUregionWeighted.csv")
+IUUregionWT <- read.csv("C:/Users/Ren/Documents/GitHub/Rapid-and-lasting-gains-from-solving-illegal-fishing/IUUregionWeighted.csv")
 
 #Adding a column to the data file (IUUregion) containing the f values per region resulting from addressing IUU fishing in the region
 IUUregionWT$Change<-IUUregionWT$f*(100-IUUregionWT$IUU)/100
@@ -62,4 +62,4 @@ PlotFig4<-grid.arrange(IUUreform,IUUreformWT, nrow = 2)
 PlotFig4
 
 #saving the plot
-ggsave("C:/Users/Ren/Documents/GitHub/Rapid and lasting gains from solving illegal fishing/Fig4.tiff",PlotFig4, width = 7, height = 14, dpi = 300)
+ggsave("C:/Users/Ren/Documents/GitHub/Rapid-and-lasting-gains-from-solving-illegal-fishing/Fig4.tiff",PlotFig4, width = 7, height = 14, dpi = 300)
