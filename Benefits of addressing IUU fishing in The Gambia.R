@@ -199,26 +199,6 @@ fdist<-ggplot(sensitivityparams, aes(x=f)) + geom_density()
 bdist<-ggplot(sensitivityparams, aes(x=b)) + geom_density()
 grid.arrange(rdist,MSYdist,fdist,bdist,ncol=2)
 
-
-#nsample<-10
-#sensitivityparamsSAMPLE<-sensitivityparams[sample(nrow(sensitivityparams), nsample), ]
-
-#nsample<-nrow(sensitivityparams)
-#sensitivityparamsSAMPLE<-sensitivityparams
-
-# #bootstrap here, get 1000 points (~10% of population with replacement)
-# nsample<-1000
-# MeanParamsSAMPLE <- vector("list",nsample)
-# for (i in 1:nsample){
-# ParamsSAMPLE<-sensitivityparams[sample(nrow(sensitivityparams), round(0.1*nrow(sensitivityparams)),replace=T), ] #10%
-# MeanParamsSAMPLE[[i]]<-as.list(c(geometric.mean(ParamsSAMPLE$r),geometric.mean(ParamsSAMPLE$MSY),geometric.mean(ParamsSAMPLE$f),geometric.mean(ParamsSAMPLE$b)))
-# #MeanParamsSAMPLE[[i]]<-as.list(c(mean(ParamsSAMPLE$r),mean(ParamsSAMPLE$MSY),mean(ParamsSAMPLE$f),mean(ParamsSAMPLE$b)))
-# }
-# sensitivityparamsSAMPLE<-rbindlist(MeanParamsSAMPLE)
-# colnames(sensitivityparamsSAMPLE) <- c("r","MSY","f","b")
-# sensitivityparamsSAMPLE
-# 
-
 nsample<-1000 #number of means
 sampsize<-100
 MeanParamsSAMPLE <- vector("list",nsample)
@@ -249,10 +229,9 @@ MultiRun_IUU<-rbindlist(MultiRun_IUU)
 MultiRun_BAU<-rbindlist(MultiRun_BAU)
 
 ##extracting the output of the IUU policy scenarios only (IUU Policy + MSY and IUU policy + Open Access)
-#output_IUUi<-output_IUU[which(output_IUU$Policy!="Fcurrent" & output_IUU$Year<=2035),]
 MultiRun_IUUi<-MultiRun_IUU[which(MultiRun_IUU$Year<=endyearproj),]
 
-# extracting the output of the open access scenario only and renaming the policy into Business-as-usual or BAU
+##extracting the output of the open access scenario only and renaming the policy into Business-as-usual or BAU
 # with no IUU policy, catch and profit are shared by Indonesia and foreign fishing fleets
 MultiRun_BAUi<-MultiRun_BAU[which(MultiRun_BAU$Policy=="Open Access" & MultiRun_BAU$Year<=endyearproj),]
 MultiRun_BAUi$Policy<-"BAU"
@@ -260,37 +239,12 @@ MultiRun_BAUi$Profit<-MultiRun_BAUi$Profit*(1-hreduce)
 MultiRun_BAUi$Harvest<-MultiRun_BAUi$Harvest*(1-hreduce)
 MultiRun_BAUi$f<-MultiRun_BAUi$f*(1-hreduce)
 
-# ##Extract Fmsy with no IUU policy
-# MultiRun_Fmsyi<-MultiRun_BAU[which(MultiRun_BAU$Policy=="Fmsy" & MultiRun_BAU$Year<=endyearproj),]
-# MultiRun_Fmsyi$Policy<-"BAUFmsy"
-# MultiRun_Fmsyi$Profit<-MultiRun_Fmsyi$Profit*(1-hreduce)
-# MultiRun_Fmsyi$Harvest<-MultiRun_Fmsyi$Harvest*(1-hreduce)
-# MultiRun_Fmsyi$f<-MultiRun_Fmsyi$f*(1-hreduce)
-
 #merge results
 mergedresult<-rbind(MultiRun_IUUi,MultiRun_BAUi)#,MultiRun_Fmsyi)
 
 ##aestetic purpose only. y-axes labels will be in unit of 1e5 for harvest and 1e8 for profit
 mergedresult$Harvest<-mergedresult$Harvest/1e3
 mergedresult$Profit<-mergedresult$Profit/1e6
-#ggplot(mergedresult, aes(x=Year,y=Harvest,colour=Policy))+geom_line()
-
-
-# mean_harvest <- mergedresult %>%
-#   group_by(Year,Policy) %>%
-#   summarize(mean.val = mean(Harvest), sd.val=sd(Harvest),n.val=n())%>%
-#   mutate(se.val = sd.val / sqrt(n.val),
-#          lower.ci.val = mean.val - qt(1 - (0.05 / 2), n.val - 1) * se.val,
-#          upper.ci.val = mean.val + qt(1 - (0.05 / 2), n.val - 1) * se.val)
-# head(mean_harvest)
-
-# mean_profit <- mergedresult %>%
-#   group_by(Year,Policy) %>%
-#   summarize(mean.val = mean(Profit), sd.val=sd(Profit),n.val=n())%>%
-#   mutate(se.val = sd.val / sqrt(n.val),
-#          lower.ci.val = mean.val - sd.val, #qt(1 - (0.05 / 2), n.val - 1) * se.val,
-#          upper.ci.val = mean.val + sd.val)#qt(1 - (0.05 / 2), n.val - 1) * se.val)
-
 
 mean_harvest <- mergedresult %>%
   group_by(Year,Policy) %>%
