@@ -9,7 +9,7 @@ library(ggrepel)
 library(gridExtra)
 library(grid)
 
-#Fig 4a. f is F/Fmsy value of the median fishery per region
+#Fig 6a. f is F/Fmsy value of the median fishery per region
 
 #Read data file. Be sure to change the address to your local file address 
 IUUregion <- read.csv("C:/Users/Ren/Documents/GitHub/Rapid-and-lasting-gains-from-solving-illegal-fishing/IUUregion.csv")
@@ -17,7 +17,7 @@ IUUregion <- read.csv("C:/Users/Ren/Documents/GitHub/Rapid-and-lasting-gains-fro
 #Adding a column to the data file (IUUregion) containing the f values per region resulting from addressing IUU fishing in the region
 IUUregion$Change<-IUUregion$f*(100-IUUregion$IUU)/100
 
-#Plotting Fig. 4a
+#Plotting Fig. 6a
 data_melt <- melt(IUUregion, id.vars = c("Region","RegionNo","IUU","Production"))
 IUUFAO<-ggplot(data_melt, aes(x=IUU, y=value)) +
   geom_segment(data=IUUregion,aes(x = IUU, xend = IUU, y = f, yend = Change), arrow = arrow(), colour = "gray", size = 1, alpha = 0.3) +
@@ -32,14 +32,14 @@ IUUreform<-IUUFAO+theme(axis.text.x=element_text(size=14,face="bold",color="blac
   scale_size_area(max_size = 15,breaks = c(0.1e7, 1e7, 2e7),name="Harvest (MT)")+theme(legend.position=c(0.8,0.87))
 
 
-#Fig 4b. f is F/Fmsy value of the catch-weighted average fishery per region
+#Fig 6b. f is F/Fmsy value of the catch-weighted average fishery per region
 #Read data file. Be sure to change the address to your local file address 
 IUUregionWT <- read.csv("C:/Users/Ren/Documents/GitHub/Rapid-and-lasting-gains-from-solving-illegal-fishing/IUUregionWeighted.csv")
 
 #Adding a column to the data file (IUUregion) containing the f values per region resulting from addressing IUU fishing in the region
 IUUregionWT$Change<-IUUregionWT$f*(100-IUUregionWT$IUU)/100
 
-#Plotting Fig. 4b
+#Plotting Fig. 6b
 data_meltWT <- melt(IUUregionWT, id.vars = c("Region","RegionNo","IUU","Production"))
 IUUFAOWT<-ggplot(data_meltWT, aes(x=IUU, y=value)) +  
   geom_segment(data=IUUregionWT,aes(x = IUU, xend = IUU, y = f, yend = Change), arrow = arrow(), colour = "gray", size = 1, alpha=0.3) +
@@ -54,12 +54,19 @@ IUUreformWT<-IUUFAOWT+theme(legend.position="none",axis.text.x=element_text(size
   scale_size_area(max_size = 15)
 
 FONTSIZE<-28
-IUUreform<- arrangeGrob(IUUreform, top = textGrob("a", x = unit(0, "npc"), y   = unit(1, "npc"), just=c("left","top"),gp=gpar(col="black", fontsize=FONTSIZE, fontfamily="Arial")))
-IUUreformWT<- arrangeGrob(IUUreformWT, top = textGrob("b", x = unit(0, "npc"), y   = unit(1, "npc"), just=c("left","top"),gp=gpar(col="black", fontsize=FONTSIZE, fontfamily="Arial")))
+IUUreform<- arrangeGrob(IUUreform, top = textGrob("a", x = unit(0, "npc"), y   = unit(1, "npc"), just=c("left","top"),gp=gpar(col="black", fontsize=FONTSIZE, fontfamily="ArialMT")))
+IUUreformWT<- arrangeGrob(IUUreformWT, top = textGrob("b", x = unit(0, "npc"), y   = unit(1, "npc"), just=c("left","top"),gp=gpar(col="black", fontsize=FONTSIZE, fontfamily="ArialMT")))
 
 
-PlotFig4<-grid.arrange(IUUreform,IUUreformWT, nrow = 2)
-PlotFig4
+PlotFig6<-grid.arrange(IUUreform,IUUreformWT, nrow = 2)
+PlotFig6
 
 #saving the plot
-ggsave("C:/Users/Ren/Documents/GitHub/Rapid-and-lasting-gains-from-solving-illegal-fishing/Fig4.tiff",PlotFig4, width = 7, height = 14, dpi = 300)
+ggsave("C:/Users/Ren/Documents/GitHub/Rapid-and-lasting-gains-from-solving-illegal-fishing/Fig6.tiff",PlotFig6, width = 7, height = 14, dpi = 300)
+#ggsave("C:/Users/Ren/Documents/GitHub/Rapid-and-lasting-gains-from-solving-illegal-fishing/Fig6.eps",PlotFig6, width = 7, height = 14, dpi = 300)
+ggsave("C:/Users/Ren/Documents/GitHub/Rapid-and-lasting-gains-from-solving-illegal-fishing/Fig6.pdf",PlotFig6, width = 7, height = 14, dpi = 300)
+
+
+pdf(file="C:/Users/Ren/Documents/GitHub/Rapid-and-lasting-gains-from-solving-illegal-fishing/Fig6.pdf",width=7,height=11)
+print(PlotFig6)
+dev.off()

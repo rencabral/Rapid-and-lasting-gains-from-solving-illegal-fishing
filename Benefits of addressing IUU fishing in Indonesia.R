@@ -186,10 +186,19 @@ plotprofit<-  ggplot()+
 write.csv(mean_harvest, file = "C:/Users/Ren/Documents/GitHub/Rapid-and-lasting-gains-from-solving-illegal-fishing/skipjackprojectionharvest.csv")
 write.csv(mean_profit, file = "C:/Users/Ren/Documents/GitHub/Rapid-and-lasting-gains-from-solving-illegal-fishing/skipjackprojectionprofit.csv")
 
-PlotFig3<-grid.arrange(plotharvest,plotprofit,ncol=2)
+PlotFig4<-grid.arrange(plotharvest,plotprofit,ncol=2)
 
 #saving results
 tiff("C:/Users/Ren/Documents/GitHub/Rapid-and-lasting-gains-from-solving-illegal-fishing/Fig4_skipjackbioecon.tiff",width=7,height=7,units="in",res=350)
-PlotFig3<-grid.arrange(plotharvest,plotprofit,ncol=2)
-PlotFig3
+PlotFig4<-grid.arrange(plotharvest,plotprofit,ncol=2)
+PlotFig4
 dev.off()
+
+
+##saving results (EPS)
+#PlotFig4<-grid.arrange(plotharvest,plotprofit,ncol=2)
+#ggsave("C:/Users/Ren/Documents/GitHub/Rapid-and-lasting-gains-from-solving-illegal-fishing/Fig4.eps",PlotFig4, width = 7, height = 7, units="in", dpi = 350)
+
+#saving results (PDF)
+ggsave("C:/Users/Ren/Documents/GitHub/Rapid-and-lasting-gains-from-solving-illegal-fishing/Fig4.pdf",PlotFig4, width = 7, height = 7, units="in", dpi = 350)
+
